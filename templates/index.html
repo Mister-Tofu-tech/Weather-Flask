@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>weather</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <!-- Font that we need-->
+  <link href="https://fonts.googleapis.com/css?family=Sen&display=swap" rel="stylesheet">
+
+</head>
+
+<script>
+  $(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+      localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+      $('#searchTab a[href="' + activeTab + '"]').tab('show');
+    }
+  });
+</script>
+
+<style>
+  body{
+    font-family: 'Sen', sans-serif;
+  }
+
+  .row .col-md-6.col-md-offset-3 > h3{
+    font-size: x-large;
+  }
+
+  .row .col-md-6.col-md-offset-3 > h5{
+    font-size: x-large;
+  }
+</style>
+
+<body>
+  <nav class="row" style="background: #044a88; color: white;">
+    <h1 class="col-md-6 text-center">Weather App</h1>
+  </nav>
+  <br />
+  <br />
+  <!-- Centered Tabs -->
+  <ul class="nav nav-tabs col-md-6 col-md-offset-3" id="searchTab">
+    <li><a data-toggle="tab" href="#city-name">By City Name</a></li>
+    <li><a data-toggle="tab" href="#zipcode">By ZipCode</a></li>
+    <li class="active"><a data-toggle="tab" href="#coor">By Coordinates</a></li>
+  </ul>
+
+  <div class="tab-content">
+
+    <!-- City Name Tab -->
+    <div id="city-name" class="tab-pane fade">
+      <div class="row" style="margin-top: 10%;">
+        <form method="post" class="col-md-6 col-md-offset-3">
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" name="city" placeholder="Search For a City">
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+            </div>
+          </div>
+        <form>
+      </div>
+      <div class="row">
+        {% if byCity and data and data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
+        <div class="col-md-6 col-md-offset-3">
+            <h3 style="font-weight: bolder;">Country : {{data.country_code}}</h3>
+            <h5>Coordinate : {{data.coordinate}}</h5>
+            <h5>City Name : {{data.city_name}}</h5>
+            <h5>temp : {{data.temp}}</h5>
+            <h5>pressure : {{data.pressure}} </h5>
+            <h5>humidity : {{data.humidity}}</h5>
+        </div>
+        {% endif %}
+        {% if byCity and error %}
+        <div class="col-md-6 col-md-offset-3">
+          <h3 style="color: red; font-weight: bolder;">
+            {{error}}
+          </h3>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ZipCode Tab-->
+    <div id="zipcode" class="tab-pane fade">
+      <div class="row" style="margin-top: 10%;">
+        <div class="col-md-6 col-md-offset-3">
+          <form method="post">
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" name="zipcode" placeholder="Search For a zipcode">
+              <input type="text" class="form-control" name="countrycode" placeholder="Search For a Country Code (default is the US)">
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </div>
+            </div>
+          <form>
+        </div>
+        <div class="row">
+          {% if byZipcode and data and data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
+          <div class="col-md-6 col-md-offset-3">
+              <h3 style="font-weight: bolder;">Country : {{data.country_code}}</h3>
+              <h5>Coordinate : {{data.coordinate}}</h5>
+              <h5>City Name : {{data.city_name}}</h5>
+              <h5>temp : {{data.temp}}</h5>
+              <h5>pressure : {{data.pressure}} </h5>
+              <h5>humidity : {{data.humidity}}</h5>
+          </div>
+          {% endif %}
+          {% if byZipcode and error %}
+          <div class="col-md-6 col-md-offset-3">
+            <h3 style="color: red; font-weight: bolder;">
+              {{error}}
+            </h3>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Coordinates Tab-->
+    <div id="coor" class="tab-pane fade in active">
+      <div class="row" style="margin-top: 10%;">
+        <div class="col-md-6 col-md-offset-3">
+          <form method="post">
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" name="lat" placeholder="Search For a Latitude (Default: 0)">
+              <input type="text" class="form-control" name="lon" placeholder="Search For a Longitude (Default: 0)">
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        {% if byCoor and data and data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
+        <div class="col-md-6 col-md-offset-3">
+            <h3 style="font-weight: bolder;">Country : {{data.country_code}}</h3>
+            <h5>Coordinate : {{data.coordinate}}</h5>
+            <h5>City Name : {{data.city_name}}</h5>
+            <h5>temp : {{data.temp}}</h5>
+            <h5>pressure : {{data.pressure}} </h5>
+            <h5>humidity : {{data.humidity}}</h5>
+        </div>
+        {% endif %}
+        {% if byCoor and error %}
+        <div class="col-md-6 col-md-offset-3">
+          <h3 style="color: red; font-weight: bolder;">
+            {{error}}
+          </h3>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+
+  </div>
+</body>
+</html>
