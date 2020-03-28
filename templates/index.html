@@ -7,6 +7,8 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
+  <link rel="icon" href="{{ url_for('static', filename='weather.ico') }}">
+
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -45,13 +47,12 @@
 </style>
 
 <body>
-  <nav class="row" style="background: #044a88; color: white;">
-    <h1 class="col-md-6 text-center">Weather App</h1>
+  <nav class="row" style="background: #e6f2e1; color: darkblue;">
+    <h1 class="col-md-6 text-center"><img src="{{ url_for('static', filename='windy.png') }}" alt="Windy Icon" style="margin: auto 5% auto 5%;">Weather App</h1>
   </nav>
-  <br />
-  <br />
+  <br/><br/>
   <!-- Centered Tabs -->
-  <ul class="nav nav-tabs col-md-6 col-md-offset-3" id="searchTab">
+  <ul class="nav nav-tabs col-md-6 col-md-offset-3" id="searchTab" style="font-size: large;">
     <li><a data-toggle="tab" href="#city-name">By City Name</a></li>
     <li><a data-toggle="tab" href="#zipcode">By ZipCode</a></li>
     <li class="active"><a data-toggle="tab" href="#coor">By Coordinates</a></li>
