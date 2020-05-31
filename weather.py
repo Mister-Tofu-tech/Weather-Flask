@@ -10,7 +10,6 @@ with open('country.csv', 'r') as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
   for row in csvreader:
     country_dict[row[1]] = row[0]
-print(country_dict)
 app = Flask(__name__)
 
 @app.route('/', methods = ['POST', 'GET'])
@@ -25,9 +24,8 @@ def weather():
     city = None
     zipcode = None
     countrycode = None
-    data = requests.get('https://api.ipdata.co?api-key=test').json()
-    lat = str(data['latitude'])
-    lon = str(data['longitude'])
+    lat = '34.0648'
+    lon = '-118.4414'
   
   # source contain json data from api
   if city:
