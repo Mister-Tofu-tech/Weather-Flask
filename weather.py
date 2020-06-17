@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
 import json
+import os
 import urllib.request
 import requests
 import csv
 
-api_key = 'e68e8e188344d2d59184b2b9ca8610c0'
+load_dotenv()
+api_key = os.environ.get("API-KEY")
 country_dict = {}
 with open('country.csv', 'r') as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
