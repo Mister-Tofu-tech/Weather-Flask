@@ -2,4 +2,5 @@
 Weather App made with Flask
 
 # To Run
-`export FLASK_APP = `
+`export FLASK_APP = weather`
+`flask run`
